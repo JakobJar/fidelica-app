@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
+
+:root {
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+
+  --small-spacing: 0.5rem;
+  --normal-spacing: 1rem;
+
+  --normal-border-radius: 10px;
+
+  --primary-color: #ffffff;
+  --secondary-color: #929292;
+  --tertiary-color: #605757;
+
+  --primary-background-color: #000000;
+
+  --ion-background-color: var(--primary-background-color);
+}
+
+* {
+  margin: 0;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+.tertiary-text {
+  color: var(--tertiary-color);
+}
+
+ion-item.input {
+  --border-color: var(--tertiary-color);
+  --border-width: 2px;
+  --border-style: solid;
+  --border-radius: var(--normal-border-radius);
+
+  & > ion-input {
+    --color: var(--secondary-color);
+    --placeholder-color: var(--tertiary-color);
+  }
+}
