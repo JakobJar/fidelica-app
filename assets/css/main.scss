@@ -7,6 +7,8 @@
 
   --small-spacing: 0.5rem;
   --normal-spacing: 1rem;
+  --large-spacing: 1.5rem;
+  --xl-spacing: 2rem;
 
   --normal-border-radius: 10px;
 
@@ -34,14 +36,60 @@
   color: var(--tertiary-color);
 }
 
+span[router-link] {
+  color: var(--primary-color);
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
 ion-item.input {
+  width: 100%;
   --border-color: var(--tertiary-color);
   --border-width: 2px;
   --border-style: solid;
   --border-radius: var(--normal-border-radius);
 
+  --padding-top: 0;
+  --padding-bottom: 0;
+
   & > ion-input {
+    width: 100%;
     --color: var(--secondary-color);
+    --highlight-color-focused: var(--secondary-color);
     --placeholder-color: var(--tertiary-color);
+    --placeholder-opacity: 1;
+
+    --padding-start: var(--xl-spacing);
+    --padding-end: var(--xl-spacing);
+    --padding-top: var(--normal-spacing);
+    --padding-bottom: var(--normal-spacing);
+  }
+}
+
+ion-button {
+  --background: var(--primary-color);
+  --color: var(--primary-background-color);
+
+  --border-radius: var(--normal-border-radius);
+  --padding-top: var(--large-spacing);
+  --padding-bottom: var(--large-spacing);
+
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--normal-spacing) var(--large-spacing);
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
   }
 }
