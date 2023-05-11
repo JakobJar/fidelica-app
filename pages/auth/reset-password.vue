@@ -1,5 +1,5 @@
 <template>
-  <AuthPageLayout :hide-slogan="true">
+  <AuthPageLayout title="Reset password" :hide-logo="true" :hide-privacy-note="true">
     <form>
       <p class="tertiary-text center-text">We’ll send your password reset info to the email address linked to your account.</p>
       <ion-item class="input" lines="none">
@@ -21,9 +21,5 @@ form {
   align-items: stretch;
   gap: var(--xl-spacing);
   width: 100%;
-}
-
-.center-text {
-  text-align: center;
 }
 </style>

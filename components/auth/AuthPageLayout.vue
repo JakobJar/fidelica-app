@@ -2,13 +2,13 @@
   <ion-page>
     <ion-content>
       <div class="container auth-page">
-        <div class="title">
+        <div v-if="!props.hideLogo" class="title">
           <img class="logo" src="/img/logo-transparent-white.svg" alt="fidelica logo">
-          <span v-if="!props.hideSlogan" class="tertiary-text">Stop misinformation on the internet now.</span>
+          <span class="tertiary-text">Stop misinformation on the internet now.</span>
         </div>
         <h1 v-if="props.title" class="page-title">{{ props.title }}</h1>
         <slot/>
-        <div id="privacy-note">
+        <div v-if="!props.hidePrivacyNote" id="privacy-note">
           <p class="tertiary-text">We value your privacy.</p>
           <p class="tertiary-text">By signing up, you agree to our <span router-link="/terms">terms</span> and <span router-link="/conditions">conditions</span>.</p>
         </div>
@@ -19,8 +19,9 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  title?: string,
-  hideSlogan?: boolean,
+    title?: string,
+    hideLogo?: boolean,
+    hidePrivacyNote?: boolean,
 }>();
 </script>
 
