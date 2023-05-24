@@ -2,10 +2,10 @@
   <ion-page>
     <ion-content>
       <div class="container auth-page">
-        <div v-if="!props.hideLogo" class="title">
+        <header v-if="!props.hideLogo">
           <img class="logo" src="/img/logo-transparent-white.svg" alt="fidelica logo">
           <span class="tertiary-text">Stop misinformation on the internet now.</span>
-        </div>
+        </header>
         <h1 v-if="props.title" class="page-title">{{ props.title }}</h1>
         <slot/>
         <div v-if="!props.hidePrivacyNote" id="privacy-note">
@@ -46,7 +46,7 @@ const props = defineProps<{
   height: 100vh;
 }
 
-.title {
+header {
   display: flex;
   flex-direction: column;
   align-items: center;

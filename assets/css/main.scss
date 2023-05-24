@@ -26,6 +26,11 @@
   margin: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
 .page-title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -89,6 +94,7 @@ ion-button {
 
 .container {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: var(--normal-spacing) var(--large-spacing);
 }
