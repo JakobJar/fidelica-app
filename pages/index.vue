@@ -4,7 +4,7 @@
       <div class="container home-page">
         <HomeHeader/>
         <SearchBar/>
-        <h1>Popular Articles</h1>
+        <h1 class="fancy-text">Popular Articles</h1>
       </div>
     </ion-content>
   </ion-page>
@@ -18,6 +18,6 @@
 .home-page {
   display: flex;
   flex-direction: column;
-  gap: var(--normal-spacing);
+  gap: var(--large-spacing);
 }
 </style>

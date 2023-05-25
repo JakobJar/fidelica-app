@@ -13,7 +13,7 @@ const emit = defineEmits(['update:modelValue']);
 <style scoped lang="scss">
 .search-icon {
   color: var(--tertiary-color);
-  font-size: 1.12em;
+  font-size: 1.2em;
   margin-right: var(--normal-spacing);
 }
 </style>

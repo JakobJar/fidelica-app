@@ -35,11 +35,15 @@ h1 {
   font-size: 1.75rem;
 }
 
-.page-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--secondary-color);
+.fancy-text {
+  background-clip: text;
+  color: transparent;
+
+  background-size: 100%;
+  background: linear-gradient(112.59deg, #008684 35.31%, #03598A 66.87%);
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .tertiary-text {

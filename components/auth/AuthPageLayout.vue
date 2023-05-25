@@ -55,6 +55,13 @@ header {
   padding: var(--large-spacing) 0;
 }
 
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
 .logo {
   height: 32px;
 }
