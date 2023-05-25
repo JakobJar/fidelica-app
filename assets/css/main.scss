@@ -31,6 +31,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+h1 {
+  font-size: 1.75rem;
+}
+
 .page-title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -79,6 +83,30 @@ ion-item.input {
   }
 }
 
+ion-item.second-input {
+  width: 100%;
+  --border-color: var(--primary-color);
+  --border-width: 2px;
+  --border-style: solid;
+  --border-radius: var(--normal-border-radius);
+
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  & > ion-input {
+    width: 100%;
+    --color: var(--secondary-color);
+    --highlight-color-focused: var(--secondary-color);
+    --placeholder-color: var(--tertiary-color);
+    --placeholder-opacity: 1;
+
+    --padding-start: var(--normal-spacing);
+    --padding-end: var(--normal-spacing);
+    --padding-top: 0;
+    --padding-bottom: 0;
+  }
+}
+
 ion-button {
   --background: var(--primary-color);
   --color: var(--primary-background-color);
@@ -94,7 +122,7 @@ ion-button {
 
 .container {
   max-width: 1200px;
-  width: 100%;
+  width: calc(100% - var(--large-spacing) * 2);
   margin: 0 auto;
   padding: var(--normal-spacing) var(--large-spacing);
 }

@@ -9,24 +9,23 @@
 </script>
 
 <style scoped lang="scss">
-.header {
+header {
   display: flex;
   width: 100%;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .logo {
-  height: 1.75rem;
+  height: 28px;
   width: auto;
-  margin-right: auto;
 }
 
 .avatar {
-  width: 2rem;
-  height: 2rem;
+  width: 26px;
+  height: 26px;
+  padding: 2px;
   border-radius: 50%;
-  border: var(--tertiary-color) solid 1px;
-  margin-right: auto;
+  border: var(--tertiary-color) solid 2px;
 }
 </style>

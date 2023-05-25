@@ -1,8 +1,9 @@
 <template>
   <ion-page>
     <ion-content>
-      <div class="container">
+      <div class="container home-page">
         <HomeHeader/>
+        <SearchBar/>
         <h1>Popular Articles</h1>
       </div>
     </ion-content>
@@ -13,6 +14,10 @@
 
 </script>
 
-<style scoped>
-
+<style scoped >
+.home-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--normal-spacing);
+}
 </style>
