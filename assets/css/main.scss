@@ -96,6 +96,10 @@ ion-item.second-input {
 
   --padding-top: 0;
   --padding-bottom: 0;
+  --inner-padding-top: 0;
+  --inner-padding-bottom: 0;
+  --inner-padding-start: var(--small-spacing);
+  --inner-padding-end: var(--small-spacing);
 
   & > ion-input {
     width: 100%;
