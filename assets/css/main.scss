@@ -5,6 +5,7 @@
   font-family: Inter, sans-serif;
   font-weight: 500;
 
+  --tiny-spacing: 0.1rem;
   --small-spacing: 0.5rem;
   --normal-spacing: 1rem;
   --large-spacing: 1.5rem;
@@ -33,6 +34,10 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 1.75rem;
+}
+
+h2 {
+  font-size: 1.5rem;
 }
 
 .fancy-text {
