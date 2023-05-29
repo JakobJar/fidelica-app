@@ -1,5 +1,7 @@
 <template>
   <ion-app>
-    <ion-router-outlet />
+    <ion-tabs>
+      <ion-router-outlet/>
+    </ion-tabs>
   </ion-app>
 </template>

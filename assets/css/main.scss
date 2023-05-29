@@ -16,7 +16,7 @@
   --primary-color: #ffffff;
   --secondary-color: #929292;
   --tertiary-color: #605757;
-  --highlight-color: #03598A;
+  --highlight-color: #008684;
 
   --primary-background-color: #000000;
 
@@ -60,7 +60,7 @@ h2 {
 }
 
 span[router-link] {
-  color: var(--highlight-color);
+  color: var(--primary-color);
 
   &:hover {
     text-decoration: underline;

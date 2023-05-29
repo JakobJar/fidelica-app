@@ -1,10 +1,10 @@
 <template>
-  <ion-item class="article-preview">
-    <ion-label class="preview-label">
+  <ion-item button class="article-preview" lines="inset">
+    <div class="preview-label">
       <p class="tertiary-text">{{ props.date.toLocaleString() }}</p>
       <h2>{{ props.title }}</h2>
       <p class="tertiary-text">{{ props.description }}</p>
-    </ion-label>
+    </div>
   </ion-item>
 </template>
 
@@ -26,6 +26,13 @@ const props = defineProps<{
   --inner-padding-bottom: 0;
   --inner-padding-start: 0;
   --inner-padding-end: 0;
+
+  --border-color: var(--tertiary-color);
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
 }
 
 .preview-label {

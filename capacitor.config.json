@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "nuxt-app",
+  "appId": "org.fidelica.app",
+  "appName": "fidelica",
   "webDir": "dist",
   "bundledWebRuntime": false
 }

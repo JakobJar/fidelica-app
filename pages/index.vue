@@ -16,23 +16,24 @@ some say it’s true." :date="new Date()"/>
         </section>
       </div>
     </ion-content>
+    <TabMenu/>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-
+import TabMenu from "~/components/tabs/TabMenu.vue";
 </script>
 
 <style scoped>
 .home-page {
-  display: flex;
-  flex-direction: column;
-  gap: var(--large-spacing);
+    display: flex;
+    flex-direction: column;
+    gap: var(--large-spacing);
 }
 
 #popular-articles {
-  display: flex;
-  flex-direction: column;
-  gap: var(--small-spacing);
+    display: flex;
+    flex-direction: column;
+    gap: var(--small-spacing);
 }
 </style>

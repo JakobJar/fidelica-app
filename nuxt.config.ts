@@ -5,6 +5,9 @@ export default defineNuxtConfig({
     ionic: {
         css: {
             basic: false
+        },
+        config: {
+            mode: "ios"
         }
     }
 })
