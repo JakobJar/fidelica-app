@@ -1,9 +1,9 @@
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header class="container">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button defaultHref="/"/>
+          <ion-back-button :defaultHref="'/article/' + route.params.id"/>
         </ion-buttons>
         <ion-buttons slot="primary">
           <ion-button>Publish</ion-button>
@@ -11,16 +11,26 @@
         <ion-title>Edit Article</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content v-if="!pending">
       <div class="container">
-        <ion-textarea v-model="content" placeholder="Type the content here..." />
+        <ion-textarea v-model="article.content" placeholder="Type the content here..." />
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-const content = useState('content', () => '');
+const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
+
+const { data: article, pending, error } = await useFetch(`/article/${route.params.id}`, {
+    method: "GET",
+    headers: {
+      "Accept": "application/json",
+    },
+    server: false,
+    baseURL: runtimeConfig.public.apiBaseUrl
+});
 </script>
 
 <style scoped lang="scss">
