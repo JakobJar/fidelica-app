@@ -82,7 +82,7 @@ ion-item.input {
   --padding-top: 0;
   --padding-bottom: 0;
 
-  & > ion-input {
+  & > ion-input, ion-textarea {
     width: 100%;
     --color: var(--secondary-color);
     --highlight-color-focused: var(--secondary-color);
@@ -91,8 +91,8 @@ ion-item.input {
 
     --padding-start: var(--xl-spacing);
     --padding-end: var(--xl-spacing);
-    --padding-top: var(--normal-spacing);
-    --padding-bottom: var(--normal-spacing);
+    --padding-top: var(--small-spacing);
+    --padding-bottom: var(--small-spacing);
   }
 }
 
@@ -135,6 +135,24 @@ ion-button {
   font-size: 1.1rem;
   font-weight: 600;
   text-transform: none;
+
+  &.secondary-button {
+    --border-color: var(--primary-color);
+    --border-width: 2px;
+    --color: var(--primary-color);
+    --background: var(--primary-background-color);
+
+    font-weight: 500;
+  }
+}
+
+ion-content {
+  --offset-top: 0;
+  --offset-bottom: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
 }
 
 .container {

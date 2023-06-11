@@ -2,13 +2,13 @@
   <ion-page>
     <ion-content>
       <div class="container">
-        <div v-if="data" id="article-content">
+        <div v-if="!pending && data" id="article-content">
           <h1 v-text="data.article.title"/>
-          <p class="secondary-text">
+          <p class="tertiary-text">
             Last edited on {{ getDateFromObjectId(data.lastEdit.id).toLocaleDateString() }}
             by <span v-text="data.lastEditor.name" router-link="/profile/{{data.lastEditor.id}}"/>
           </p>
-          <p v-for="line in data.article.content.split('\n')" v-text="line" :key="line" class="tertiary-text"/>
+          <p v-for="line in data.article.content.split('\n')" v-text="line" :key="line" class="secondary-text"/>
         </div>
       </div>
     </ion-content>
@@ -19,7 +19,7 @@
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
-const {data, error} = await useAsyncData("article-" + route.params.id, async () => {
+const {data, pending, error} = await useAsyncData("article-" + route.params.id, async () => {
     const article = await $fetch(`/article/${route.params.id}`, {
         method: "GET",
         headers: {
@@ -57,6 +57,16 @@ const {data, error} = await useAsyncData("article-" + route.params.id, async () 
         lastEditor,
     };
 });
+
+if (error.value)
+    console.error(error.value);
+
+if (data.value) {
+    useSeoMeta({
+        title: data.value.article.title + " | " + runtimeConfig.public.siteName,
+        description: data.value.article.shortDescription,
+    });
+}
 </script>
 
 <style scoped lang="scss">
