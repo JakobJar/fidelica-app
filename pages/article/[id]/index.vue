@@ -2,13 +2,24 @@
   <ion-page>
     <ion-content>
       <div class="container">
+        <ArticleHeader default-back-href="/">
+          <ion-button :router-link="'/article/' + route.params.id + '/edit'" class="secondary-button">Edit</ion-button>
+        </ArticleHeader>
         <div v-if="!pending && data" id="article-content">
-          <h1 v-text="data.article.title"/>
-          <p class="tertiary-text">
-            Last edited on {{ getDateFromObjectId(data.lastEdit.id).toLocaleDateString() }}
-            by <span v-text="data.lastEditor.name" router-link="/profile/{{data.lastEditor.id}}"/>
-          </p>
-          <p v-for="line in data.article.content.split('\n')" v-text="line" :key="line" class="secondary-text"/>
+          <div class="title">
+            <h1 v-text="data.article.title"/>
+            <p class="tertiary-text">
+              Last edited on {{ getDateFromObjectId(data.lastEdit.id).toLocaleDateString() }}
+              by <span v-text="data.lastEditor.name" :router-link="'/profile/' + data.lastEditor.id"/>
+            </p>
+          </div>
+          <div class="text">
+            <p v-for="line in data.article.content.split('\n')" v-text="line" :key="line" class="secondary-text"/>
+          </div>
+        </div>
+        <div v-else-if="pending" id="article-content">
+          <h1><ion-skeleton-text style="width: 80%"/></h1>
+          <p><ion-skeleton-text style="width: 100%"/></p>
         </div>
       </div>
     </ion-content>
@@ -73,6 +84,18 @@ if (data.value) {
 #article-content {
   display: flex;
   flex-direction: column;
-  gap: var(--small-spacing);
+  gap: var(--normal-spacing);
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tiny-spacing);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tiny-spacing);
 }
 </style>

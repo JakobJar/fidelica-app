@@ -2,17 +2,10 @@
   <ion-page>
     <ion-content v-if="!pending && article">
       <div class="container">
-        <header>
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-back-button :defaultHref="'/article/' + route.params.id"/>
-            </ion-buttons>
-            <ion-buttons slot="primary">
-              <ion-button id="open-meta" class="secondary-button">Edit Meta</ion-button>
-              <ion-button>Publish</ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </header>
+        <ArticleHeader :default-back-href="'/article/' + route.params.id">
+          <ion-button id="open-meta" class="secondary-button">Edit Meta</ion-button>
+          <ion-button>Publish</ion-button>
+        </ArticleHeader>
         <ion-textarea v-model="article.content" placeholder="Type the content here..." class="content" />
       </div>
     </ion-content>
@@ -52,26 +45,14 @@ const { data: article, pending, error } = await useFetch(`/article/${route.param
 
 const modal = ref();
 
+useSeoMeta({title: "Edit article | " + runtimeConfig.public.siteName});
+
 function closeModal() {
   modal.value.dismiss();
 }
 </script>
 
 <style scoped lang="scss">
-ion-toolbar {
-  --background: var(--background-color);
-  --color: var(--primary-color);
-
-  ion-back-button {
-    --color: var(--primary-color);
-  }
-
-  ion-buttons {
-    display: flex;
-    gap: var(--small-spacing);
-  }
-}
-
 ion-textarea.content {
   --color: var(--secondary-color);
   --highlight-color: var(--secondary-color);
