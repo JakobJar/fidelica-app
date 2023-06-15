@@ -2,8 +2,9 @@
   <header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button icon="/icon/ios-arrow-left.svg" :defaultHref="props.defaultBackHref"/>
+        <ion-back-button v-if="!props.hideBackButton" icon="/icon/ios-arrow-left.svg" :defaultHref="props.defaultBackHref"/>
       </ion-buttons>
+      <ion-title v-if="props.title">{{ props.title }}</ion-title>
       <ion-buttons slot="primary">
         <slot/>
       </ion-buttons>
@@ -13,7 +14,9 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  defaultBackHref?: string
+  defaultBackHref?: string,
+  title?: string,
+  hideBackButton?: boolean,
 }>();
 </script>
 

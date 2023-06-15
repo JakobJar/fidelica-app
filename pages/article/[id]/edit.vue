@@ -4,20 +4,15 @@
       <div class="container">
         <ArticleHeader :default-back-href="'/article/' + route.params.id">
           <ion-button id="open-meta" class="secondary-button">Edit Meta</ion-button>
-          <ion-button>Publish</ion-button>
+          <ion-button id="publish-button">Publish</ion-button>
         </ArticleHeader>
         <ion-textarea v-model="article.content" placeholder="Type the content here..." class="content" />
       </div>
     </ion-content>
-    <ion-modal ref="modal" class="container" trigger="open-meta" >
-      <header>
-        <ion-toolbar>
-          <ion-title>Edit Meta</ion-title>
-          <ion-buttons slot="primary">
-            <ion-button @click="closeModal">Save</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </header>
+    <ion-modal ref="metaModal" class="container" trigger="open-meta">
+      <ArticleHeader title="Edit meta">
+        <ion-button @click="closeModal">Save</ion-button>
+      </ArticleHeader>
       <form id="meta-form">
         <ion-item class="input" lines="none">
           <ion-textarea v-model="article.title" placeholder="Title" type="text" />
@@ -27,11 +22,20 @@
         </ion-item>
       </form>
     </ion-modal>
+    <ion-modal ref="commentModal" class="container" trigger="publish-button">
+      <ArticleHeader title="Submit edit" :hide-back-button="true" :default-back-href="'/article/' + route.params.id">
+        <ion-button @click="submit">Publish</ion-button>
+      </ArticleHeader>
+      <ion-item class="input" lines="none">
+        <ion-textarea v-model="comment" placeholder="Type what you've changed." />
+      </ion-item>
+    </ion-modal>
   </ion-page>
 </template>
 
 <script setup lang="ts">
 const route = useRoute();
+const ionRouter = useIonRouter();
 const runtimeConfig = useRuntimeConfig();
 
 const { data: article, pending, error } = await useFetch(`/article/${route.params.id}`, {
@@ -42,13 +46,43 @@ const { data: article, pending, error } = await useFetch(`/article/${route.param
     server: false,
     baseURL: runtimeConfig.public.apiBaseUrl
 });
+const comment = useState("comment", () => "");
 
-const modal = ref();
+const metaModal = ref();
+const commentModal = ref();
 
 useSeoMeta({title: "Edit article | " + runtimeConfig.public.siteName});
 
+async function submit() {
+  const editData = article.value as any;
+  if (!editData || !editData.title || !editData.shortDescription || !editData.content)
+    return;
+
+  const formData = new FormData();
+  formData.set("title", editData.title);
+  formData.set("shortDescription", editData.shortDescription);
+  formData.set("content", editData.content);
+  formData.set("description", comment.value);
+
+  const {data: submitData, error: submitError, pending: submitPending} = await useFetch(`/article/${route.params.id}/edit`, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+    },
+    server: false,
+    baseURL: runtimeConfig.public.apiBaseUrl,
+    body: formData
+  });
+
+  if (error) {
+    return;
+  }
+
+  ionRouter.push("/article/" + route.params.id);
+}
+
 function closeModal() {
-  modal.value.dismiss();
+  metaModal.value.$el.dismiss();
 }
 </script>
 
