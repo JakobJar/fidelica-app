@@ -69,6 +69,7 @@ async function submit() {
     headers: {
       "Accept": "application/json",
     },
+    credentials: "include",
     server: false,
     baseURL: runtimeConfig.public.apiBaseUrl,
     body: formData
