@@ -2,9 +2,9 @@
   <ion-page>
     <ion-content>
       <div class="container">
-        <ArticleHeader default-back-href="/">
+        <DefaultHeader default-back-href="/">
           <ion-button :router-link="'/article/' + route.params.id + '/edit'" class="secondary-button">Edit</ion-button>
-        </ArticleHeader>
+        </DefaultHeader>
         <div v-if="!pending && data" id="article-content">
           <div class="title">
             <h1 v-text="data.article.title"/>
