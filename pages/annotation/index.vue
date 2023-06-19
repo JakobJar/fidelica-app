@@ -3,13 +3,13 @@
     <ion-content>
       <div class="container">
         <DefaultHeader title="Add annotation" default-back-href="/">
-          <ion-button>Publish</ion-button>
+          <ion-button @click="submit">Publish</ion-button>
         </DefaultHeader>
         <div>
           <p class="tertiary-text">Annotations represent context to content on the internet.</p>
           <p class="tertiary-text">
             If you think something requires additional context or needs to be fact-checked
-            you help to create a better informed world by your contribution.
+            you can help to create a better informed world by your contribution.
           </p>
           <p class="tertiary-text">Your annotation has to reach certain amount of upvotes before it will be shown
             publicly.</p>
@@ -36,9 +36,45 @@
 <script setup lang="ts">
 import DefaultHeader from "~/components/header/DefaultHeader.vue";
 
+const runtimeConfig = useRuntimeConfig();
+const ionRouter = useIonRouter();
+const route = useRoute();
+
 const url = useState("url", () => "");
 const rating = useState("rating", () => "");
 const content = useState("content", () => "");
+
+async function submit() {
+  if (url.value === "" || rating.value === "" || content.value === "")
+    return;
+
+  const formData = new FormData();
+  formData.set("postURL", url.value);
+  formData.set("rating", rating.value);
+  formData.set("comment", content.value);
+  // TODO: Add related articles
+
+  const { data: result, error } = await useFetch(`/annotation/`, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+    },
+    body: formData,
+    credentials: "include",
+    server: false,
+    baseURL: runtimeConfig.public.apiBaseUrl
+  });
+
+  if (error.value) {
+    console.error(error.value);
+    return;
+  }
+
+  if (result.value) {
+    console.log(result.value);
+    ionRouter.push(`/annotation/${result.value.id}`);
+  }
+}
 </script>
 
 <style scoped lang="scss">

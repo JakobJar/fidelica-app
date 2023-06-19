@@ -40,8 +40,10 @@ async function submit() {
     baseURL: runtimeConfig.public.apiBaseUrl
   });
 
-  if (error)
+  if (error) {
+    console.log(error);
     return;
+  }
 
   ionRouter.push("/");
 }
