@@ -40,6 +40,10 @@ h2 {
   font-size: 1.5rem;
 }
 
+p {
+  padding: var(--tiny-spacing) 0;
+}
+
 .fancy-text {
   background-clip: text;
   color: transparent;
@@ -110,17 +114,32 @@ ion-item.second-input {
   --inner-padding-start: var(--small-spacing);
   --inner-padding-end: var(--small-spacing);
 
-  & > ion-input {
+  & > ion-input, ion-select {
     width: 100%;
+    --color: var(--secondary-color);
+    --highlight-color-focused: var(--secondary-color);
+    --ion-item-color: var(--primary-color);
+    --placeholder-color: var(--tertiary-color);
+    --placeholder-opacity: 1;
+
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+  }
+
+  & > ion-textarea {
+    width: 100%;
+    height: 150px;
     --color: var(--secondary-color);
     --highlight-color-focused: var(--secondary-color);
     --placeholder-color: var(--tertiary-color);
     --placeholder-opacity: 1;
 
-    --padding-start: var(--normal-spacing);
-    --padding-end: var(--normal-spacing);
-    --padding-top: 0;
-    --padding-bottom: 0;
+    --padding-start: var(--xl-spacing);
+    --padding-end: var(--xl-spacing);
+    --padding-top: var(--normal-spacing);
+    --padding-bottom: var(--normal-spacing);
   }
 }
 

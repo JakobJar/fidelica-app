@@ -21,6 +21,10 @@ const props = defineProps<{
 </script>
 
 <style scoped lang="scss">
+header {
+  padding: var(--small-spacing) 0;
+}
+
 ion-toolbar {
   --background: var(--background-color);
   --color: var(--primary-color);

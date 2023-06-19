@@ -16,12 +16,11 @@ some say it’s true." :date="new Date()"/>
         </section>
       </div>
     </ion-content>
-    <TabMenu/>
+    <!--<TabMenu/>-->
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import TabMenu from "~/components/tabs/TabMenu.vue";
 </script>
 
 <style scoped>

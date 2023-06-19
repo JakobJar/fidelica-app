@@ -2,17 +2,17 @@
   <ion-page>
     <ion-content v-if="!pending && article">
       <div class="container">
-        <ArticleHeader :default-back-href="'/article/' + route.params.id">
+        <DefaultHeader :default-back-href="'/article/' + route.params.id">
           <ion-button id="open-meta" class="secondary-button">Edit Meta</ion-button>
           <ion-button id="publish-button">Publish</ion-button>
-        </ArticleHeader>
+        </DefaultHeader>
         <ion-textarea v-model="article.content" placeholder="Type the content here..." class="content" />
       </div>
     </ion-content>
     <ion-modal ref="metaModal" class="container" trigger="open-meta">
-      <ArticleHeader title="Edit meta">
+      <DefaultHeader title="Edit meta">
         <ion-button @click="closeModal">Save</ion-button>
-      </ArticleHeader>
+      </DefaultHeader>
       <form id="meta-form">
         <ion-item class="input" lines="none">
           <ion-textarea v-model="article.title" placeholder="Title" type="text" />
@@ -23,9 +23,9 @@
       </form>
     </ion-modal>
     <ion-modal ref="commentModal" class="container" trigger="publish-button">
-      <ArticleHeader title="Submit edit" :hide-back-button="true" :default-back-href="'/article/' + route.params.id">
+      <DefaultHeader title="Submit edit" :hide-back-button="true" :default-back-href="'/article/' + route.params.id">
         <ion-button @click="submit">Publish</ion-button>
-      </ArticleHeader>
+      </DefaultHeader>
       <ion-item class="input" lines="none">
         <ion-textarea v-model="comment" placeholder="Type what you've changed." />
       </ion-item>
@@ -34,6 +34,8 @@
 </template>
 
 <script setup lang="ts">
+import DefaultHeader from "~/components/header/DefaultHeader.vue";
+
 const route = useRoute();
 const ionRouter = useIonRouter();
 const runtimeConfig = useRuntimeConfig();
