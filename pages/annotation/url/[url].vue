@@ -3,7 +3,10 @@
     <ion-content>
       <div class="container">
         <DefaultHeader default-back-href="/"/>
-        <SearchBar/>
+        <div class="annotation-page">
+          <SearchBar/>
+          <AnnotationInfo/>
+        </div>
       </div>
     </ion-content>
   </ion-page>
@@ -19,6 +22,10 @@ const router = useIonRouter();
 useSeoMeta({title: "Search | " + runtimeConfig.public.siteName});
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.annotation-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--large-spacing);
+}
 </style>
