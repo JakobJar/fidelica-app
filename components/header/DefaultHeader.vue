@@ -3,6 +3,7 @@
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-back-button v-if="!props.hideBackButton" icon="/icon/ios-arrow-left.svg" :defaultHref="props.defaultBackHref"/>
+        <slot name="start"/>
       </ion-buttons>
       <ion-title v-if="props.title">{{ props.title }}</ion-title>
       <ion-buttons slot="primary">

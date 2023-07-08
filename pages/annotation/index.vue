@@ -40,7 +40,7 @@ const runtimeConfig = useRuntimeConfig();
 const ionRouter = useIonRouter();
 const route = useRoute();
 
-const url = useState("url", () => "");
+const url = useState("url", () => route.query.url as string || "");
 const rating = useState("rating", () => "");
 const content = useState("content", () => "");
 

@@ -1,13 +1,26 @@
 <template>
   <ion-item class="second-input" lines="none">
     <ion-icon class="search-icon" :icon="ioniconsSearchOutline" slot="start" />
-    <ion-input placeholder="Search" type="text" :value="props.modelValue" @input="emit('update:modelValue', $event.target.value)"  />
+    <ion-input placeholder="Search" type="url" v-model="query"
+               :value="props.modelValue" @input="emit('update:modelValue', $event.target.value)"
+               @submit="submit" @keydown.enter="submit" />
   </ion-item>
 </template>
 
 <script setup lang="ts">
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
+
+const router = useIonRouter();
+
+const query = useState('query', () => '');
+
+function submit() {
+  if (query.value === '')
+    return;
+
+  router.push('/annotation/url/' + encodeURIComponent(query.value));
+}
 </script>
 
 <style scoped lang="scss">

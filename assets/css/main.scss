@@ -145,6 +145,9 @@ ion-item.second-input {
 
 ion-button {
   --background: var(--primary-color);
+  --background-activated: var(--secondary-color);
+  --background-hover: var(--primary-color);
+  --background-hover-opactiy: 0.8;
   --color: var(--primary-background-color);
 
   --border-radius: var(--normal-border-radius);

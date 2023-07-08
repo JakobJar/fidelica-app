@@ -3,6 +3,8 @@
 </template>
 
 <script setup lang="ts">
+const runtimeConfig = useRuntimeConfig();
+
 const props = defineProps({
   url: {
     type: String,
@@ -10,13 +12,19 @@ const props = defineProps({
   }
 });
 
-const {data, pending, error} = useLazyFetch("https://publish.twitter.com/oembed", {
+const params = new URLSearchParams();
+params.set("url", props.url);
+params.set("theme", "dark");
+params.set("align", "center");
+params.set("dnt", "true");
+
+const url = "https://publish.twitter.com/oembed/" + "?" + params.toString();
+
+const {data, pending, error} = useLazyFetch("/cors/", {
   params: {
-    url: props.url,
-    theme: "dark",
-    align: "center",
-    dnt: true,
-  }
+    url: url
+  },
+  baseURL: runtimeConfig.public.apiBaseUrl,
 });
 </script>
 
