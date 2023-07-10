@@ -2,17 +2,20 @@
   <div class="annotation">
     <div class="annotation-content">
       <div class="annotation-header">
-        <ion-icon :icon="ioniconsCheckmarkCircle" class="header-icon" />
+        <ion-icon :icon="ioniconsCheckmarkCircle" class="header-icon"/>
         <div>
           <h1>True</h1>
           <p class="tertiary-text">This post is considered to be true.</p>
         </div>
       </div>
-      <p class="secondary-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia dignissim felis, vel iaculis elit rutrum non. Ut a euismod purus. Donec id mattis tellus. Integer pharetra a nibh in placerat. Integer at vehicula massa. Nulla pulvinar lorem sit amet dolor tempor, et porta enim facilisis. Mauris non venenatis sapien.</p>
-        <div class="profile">
-            <img src="/img/no-user.svg">
-            <span class="secondary-text">posted by <span router-link="/profile/JakobStiel">Jakob Stiel</span></span>
-        </div>
+      <p class="secondary-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia dignissim
+        felis, vel iaculis elit rutrum non. Ut a euismod purus. Donec id mattis tellus. Integer pharetra a nibh in
+        placerat. Integer at vehicula massa. Nulla pulvinar lorem sit amet dolor tempor, et porta enim facilisis. Mauris
+        non venenatis sapien.</p>
+      <div class="profile">
+        <img class="avatar" src="/img/no-user.svg" alt="">
+        <span class="tertiary-text">posted by <span router-link="/profile/JakobStiel">Jakob Stiel</span></span>
+      </div>
     </div>
     <div class="votes">
       <ion-icon :icon="ioniconsArrowUp" class="vote-icon"/>
@@ -78,15 +81,16 @@
 }
 
 .profile {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  gap: var(--small-spacing);
+  flex-direction: row;
+  align-items: center;
 
-    .avatar {
-        width: 3rem;
-        height: 3rem;
-        border: var(--tertiary-color) 1px solid;
-        border-radius: 50%;
-    }
+  .avatar {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: var(--tertiary-color) 2px solid;
+    border-radius: 50%;
+  }
 }
 </style>

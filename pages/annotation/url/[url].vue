@@ -11,19 +11,20 @@
       </div>
     </ion-content>
 
-      <ion-modal ref="modal" trigger="open-modal">
-          <DefaultHeader :hide-back-button="true" title="Other Annotation">
-              <template #start>
-                  <ion-button slot="start" class="secondary-button" @click="closeModal">Close</ion-button>
-              </template>
-              <ion-button @click="closeModal">Add new</ion-button>
-          </DefaultHeader>
-          <ion-content>
-              <div class='container'>
-                  <AnnotationInfo/>
-              </div>
-          </ion-content>
-      </ion-modal>
+    <ion-modal ref="modal" trigger="open-modal">
+      <DefaultHeader :hide-back-button="true" title="Other Annotation">
+        <template #start>
+          <ion-button slot="start" class="secondary-button" @click="closeModal">Close</ion-button>
+        </template>
+        <ion-button @click="reportAnnotation">Add new</ion-button>
+      </DefaultHeader>
+      <ion-content>
+        <div class='container'>
+
+
+        </div>
+      </ion-content>
+    </ion-modal>
   </ion-page>
 </template>
 
@@ -42,7 +43,24 @@ useSeoMeta({title: "Check | " + runtimeConfig.public.siteName});
 
 const modal = ref();
 
-function reportAnnotation()
+const annotations = useAsyncData(async () => {
+  const annotations: any[] = await $fetch("/annotation/url/" + encodeURIComponent(props.url), {
+    headers: {
+      "Accept": "application/json",
+    },
+    baseURL: runtimeConfig.public.apiBaseUrl,
+  });
+
+  annotations.sort((a, b) => (b.upvotes.length - b.downvotes.length) - (a.upvotes.length - a.downvotes.length));
+
+  return {
+    annotations: annotations,
+  };
+});
+
+function reportAnnotation() {
+  router.push("/annotation?url=" + encodeURIComponent(props.url));
+}
 
 function closeModal() {
   modal.value?.$el.dismiss();
