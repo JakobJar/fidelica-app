@@ -9,16 +9,21 @@
           <ion-button id="open-modal">Show other annotations</ion-button>
         </div>
       </div>
+    </ion-content>
 
       <ion-modal ref="modal" trigger="open-modal">
-        <DefaultHeader :hide-back-button="true" title="Other Annotation">
-          <template #start>
-            <ion-button slot="start" class="secondary-button" @click="closeModal">Close</ion-button>
-          </template>
-          <ion-button @click="closeModal">Add new</ion-button>
-        </DefaultHeader>
+          <DefaultHeader :hide-back-button="true" title="Other Annotation">
+              <template #start>
+                  <ion-button slot="start" class="secondary-button" @click="closeModal">Close</ion-button>
+              </template>
+              <ion-button @click="closeModal">Add new</ion-button>
+          </DefaultHeader>
+          <ion-content>
+              <div class='container'>
+                  <AnnotationInfo/>
+              </div>
+          </ion-content>
       </ion-modal>
-    </ion-content>
   </ion-page>
 </template>
 

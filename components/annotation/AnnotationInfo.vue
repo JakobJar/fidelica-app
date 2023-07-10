@@ -9,6 +9,10 @@
         </div>
       </div>
       <p class="secondary-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia dignissim felis, vel iaculis elit rutrum non. Ut a euismod purus. Donec id mattis tellus. Integer pharetra a nibh in placerat. Integer at vehicula massa. Nulla pulvinar lorem sit amet dolor tempor, et porta enim facilisis. Mauris non venenatis sapien.</p>
+        <div class="profile">
+            <img src="/img/no-user.svg">
+            <span class="secondary-text">posted by <span router-link="/profile/JakobStiel">Jakob Stiel</span></span>
+        </div>
     </div>
     <div class="votes">
       <ion-icon :icon="ioniconsArrowUp" class="vote-icon"/>
@@ -71,5 +75,18 @@
       color: var(--highlight-color);
     }
   }
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .avatar {
+        width: 3rem;
+        height: 3rem;
+        border: var(--tertiary-color) 1px solid;
+        border-radius: 50%;
+    }
 }
 </style>
