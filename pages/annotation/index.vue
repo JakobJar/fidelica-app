@@ -2,9 +2,9 @@
   <ion-page>
     <ion-content>
       <div class="container">
-        <DefaultHeader title="Add annotation" default-back-href="/">
+        <MainHeader title="Add annotation" default-back-href="/">
           <ion-button @click="submit">Publish</ion-button>
-        </DefaultHeader>
+        </MainHeader>
         <div>
           <p class="tertiary-text">Annotations represent context to content on the internet.</p>
           <p class="tertiary-text">
@@ -34,8 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import DefaultHeader from "~/components/header/DefaultHeader.vue";
-
 const runtimeConfig = useRuntimeConfig();
 const ionRouter = useIonRouter();
 const route = useRoute();
@@ -44,7 +42,7 @@ const url = useState("url", () => route.query.url as string || "");
 const rating = useState("rating", () => "");
 const content = useState("content", () => "");
 
-async function submit() {
+const submit = async () => {
   if (url.value === "" || rating.value === "" || content.value === "")
     return;
 
@@ -74,7 +72,7 @@ async function submit() {
     console.log(result.value);
     ionRouter.push(`/annotation/${result.value.id}`);
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

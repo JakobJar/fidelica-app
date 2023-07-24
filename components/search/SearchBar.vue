@@ -15,12 +15,12 @@ const router = useIonRouter();
 
 const query = useState('query', () => '');
 
-function submit() {
+const submit = () => {
   if (query.value === '')
     return;
 
   router.push('/annotation/url/' + encodeURIComponent(query.value));
-}
+};
 </script>
 
 <style scoped lang="scss">

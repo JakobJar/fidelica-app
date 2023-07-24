@@ -23,7 +23,7 @@ const ionRouter = useIonRouter();
 const username = useState("username", () => "");
 const password = useState("password", () => "");
 
-async function submit() {
+const submit = async () => {
   const data = new FormData();
   data.set("username", username.value);
   data.set("password", password.value);
@@ -46,7 +46,7 @@ async function submit() {
   }
 
   ionRouter.push("/");
-}
+};
 </script>
 
 <style scoped>

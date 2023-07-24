@@ -2,26 +2,28 @@
   <ion-page>
     <ion-content>
       <div class="container">
-        <DefaultHeader default-back-href="/"/>
+        <MainHeader default-back-href="/"/>
         <div class="annotation-page">
           <SearchBar/>
-          <AnnotationInfo/>
+          <div v-if="!pending">
+            <AnnotationInfo v-if="annotations && annotations[0]" :annotation="annotations[0]"/>
+            <AnnotationInfo v-else :annotation="UNDEFINED_ANNOTATION"/>
+          </div>
           <ion-button id="open-modal">Show other annotations</ion-button>
         </div>
       </div>
     </ion-content>
 
     <ion-modal ref="modal" trigger="open-modal">
-      <DefaultHeader :hide-back-button="true" title="Other Annotation">
+      <MainHeader :hide-back-button="true" title="Other Annotation">
         <template #start>
           <ion-button slot="start" class="secondary-button" @click="closeModal">Close</ion-button>
         </template>
         <ion-button @click="reportAnnotation">Add new</ion-button>
-      </DefaultHeader>
+      </MainHeader>
       <ion-content>
         <div class='container'>
-
-
+          <AnnotationInfo v-for="annotation in annotations" :annotation="annotation" :key="annotation.id"/>
         </div>
       </ion-content>
     </ion-modal>
@@ -29,42 +31,59 @@
 </template>
 
 <script setup lang="ts">
-import DefaultHeader from "~/components/header/DefaultHeader.vue";
+import Annotation, {AnnotationRating, RawAnnotation, UNDEFINED_ANNOTATION} from "~/types/annotation";
+import {PreviewUser} from "~/types/user";
 
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 const router = useIonRouter();
 
-const props = defineProps<{
-  url: string
-}>()
-
 useSeoMeta({title: "Check | " + runtimeConfig.public.siteName});
 
+const url = Array.isArray(route.params.url) ? route.params.url[0] : route.params.url;
 const modal = ref();
 
-const annotations = useAsyncData(async () => {
-  const annotations: any[] = await $fetch("/annotation/url/" + encodeURIComponent(props.url), {
-    headers: {
-      "Accept": "application/json",
-    },
-    baseURL: runtimeConfig.public.apiBaseUrl,
-  });
+const {data: annotations, pending } = useAsyncData(async () => {
+  const response = await useAPI<RawAnnotation[]>("/annotation/url/" + encodeURIComponent(url));
+  console.log(response);
+  if (!response.ok || !response._data)
+    return [];
+  const rawAnnotations: RawAnnotation[] = response._data;
+  console.log(rawAnnotations);
 
-  annotations.sort((a, b) => (b.upvotes.length - b.downvotes.length) - (a.upvotes.length - a.downvotes.length));
+  const annotations = await Promise.all(rawAnnotations.map(value => mapReporter(value)));
 
-  return {
-    annotations: annotations,
-  };
+  annotations.sort((a, b) => getVotes(b) - getVotes(a));
+  return annotations;
 });
 
-function reportAnnotation() {
-  router.push("/annotation?url=" + encodeURIComponent(props.url));
+const mapReporter = async (value: RawAnnotation): Promise<Annotation> => {
+  const reporterResponse = await useAPI<PreviewUser>(`/user/${value.reporterId}`, {
+    params: {
+      preview: true,
+    }
+  });
+
+  let reporter: PreviewUser | undefined = undefined;
+  if (reporterResponse.ok && reporterResponse._data)
+    reporter = await reporterResponse._data;
+
+  return {
+    id: value.id,
+    postId: value.postId,
+    rating: value.rating as AnnotationRating,
+    note: value.note,
+    reporter: reporter,
+    upvoters: value.upvoters,
+    downvoters: value.downvoters,
+  }
 }
 
-function closeModal() {
-  modal.value?.$el.dismiss();
-}
+const getVotes = (annotation: Annotation | RawAnnotation) => annotation.upvoters.length - annotation.downvoters.length;
+
+const reportAnnotation = () => router.push("/annotation?url=" + encodeURIComponent(url));
+
+const closeModal = () => modal.value?.$el.dismiss();
 </script>
 
 <style scoped lang="scss">
