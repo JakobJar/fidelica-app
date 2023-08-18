@@ -4,11 +4,11 @@
       <div class="container home-page">
         <HomeHeader/>
         <SearchBar/>
-        <section id="popular-articles">
+        <!--<section id="popular-articles">
           <h1 class="fancy-text">Popular Articles</h1>
           <ion-list>
           </ion-list>
-        </section>
+        </section>-->
       </div>
     </ion-content>
     <!--<TabMenu/>-->

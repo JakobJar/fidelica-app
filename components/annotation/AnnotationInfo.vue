@@ -15,9 +15,9 @@
       </div>
     </div>
     <div class="votes">
-      <ion-icon @click="upvote" :icon="ioniconsArrowUp" class="vote-icon"/>
+      <ion-icon @click="upvote" :icon="ioniconsArrowUp" :class="'vote-icon' + (hasUpvoted() ? ' voted' : '')"/>
       <span class="vote-count">{{ getVotes() }}</span>
-      <ion-icon @click="downvote" :icon="ioniconsArrowDown" class="vote-icon"/>
+      <ion-icon @click="downvote" :icon="ioniconsArrowDown" :class="'vote-icon' + (hasDownvoted() ? ' voted' : '')"/>
     </div>
   </div>
 </template>
@@ -31,14 +31,23 @@ const props = defineProps<{
   annotation: Annotation
 }>();
 
-const annotation = props.annotation;
+const annotation = useState("annotation", () => props.annotation);
 const reporter = props.annotation.reporter;
 const ratingInfo = getAnnotationRatingInfo(props.annotation.rating);
 
 const getVotes = (): number => props.annotation.upvoters.length - props.annotation.downvoters.length;
 
 const vote = async (type: "upvote" | "downvote") => {
-  const response = await useAPI(`/annotation/${annotation.id}/${type}`, {
+  if (!auth.hasCurrentUser() && !(await auth.validate()))
+    return;
+
+  const user = auth.getCurrentUser();
+
+  let remove: boolean = false;
+  if (annotation.value[`${type}rs`].indexOf(user!.id) !== -1)
+    remove = true;
+
+  const response = await useAPI(`/annotation/id/${annotation.value.id}/${remove ? "remove-vote" : type}`, {
     method: "POST",
     server: false
   });
@@ -46,12 +55,19 @@ const vote = async (type: "upvote" | "downvote") => {
   if (!response.ok && (response.status !== 401 || !(await auth.validate())))
     return;
 
-  const user = auth.getCurrentUser();
-  annotation[`${type}rs`].push(user!.id);
+  if (!remove) {
+    annotation.value[`${type}rs`].push(user!.id);
+    const oppositeType = type === "upvote" ? "downvote" : "upvote";
+    annotation.value[`${oppositeType}rs`] = annotation.value[`${oppositeType}rs`].filter(value => value !== user!.id);
+  } else {
+    annotation.value[`${type}rs`] = annotation.value[`${type}rs`].filter(value => value !== user!.id);
+  }
 }
 
 const upvote = async () => await vote("upvote");
+const hasUpvoted = () => annotation.value.upvoters.indexOf(auth.getCurrentUser()?.id || "") !== -1;
 const downvote = async () => await vote("downvote");
+const hasDownvoted = () => annotation.value.downvoters.indexOf(auth.getCurrentUser()?.id || "") !== -1;
 </script>
 
 <style scoped lang="scss">
@@ -99,7 +115,7 @@ const downvote = async () => await vote("downvote");
       color: var(--primary-color);
     }
 
-    &:active {
+    &:active, &.voted {
       color: var(--highlight-color);
     }
   }

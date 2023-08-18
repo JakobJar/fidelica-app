@@ -67,12 +67,12 @@ p {
   text-align: center;
 }
 
-span[router-link] {
+span[router-link], p[router-link] {
   color: var(--primary-color);
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;
-    cursor: pointer;
   }
 }
 

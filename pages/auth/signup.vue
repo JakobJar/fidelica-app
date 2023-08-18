@@ -11,12 +11,16 @@
         <ion-input v-model="password" placeholder="Password" type="password" />
       </ion-item>
       <ion-button>Sign Up</ion-button>
-      <span class="tertiary-text">Have an account? <span router-link="/auth/signin">Sign In</span></span>
+      <span class="tertiary-text">Have an account? <span @click="router.push('/auth/signin')">Sign In</span></span>
     </form>
   </AuthPageLayout>
 </template>
 
 <script setup lang="ts">
+import AuthPageLayout from "~/layouts/auth/AuthPageLayout.vue";
+
+const router = useIonRouter();
+
 const username = useState("username", () => "");
 const email = useState("email", () => "");
 const password = useState("password", () => "");

@@ -2,20 +2,21 @@ import User from "~/types/user";
 
 export const useAuth = () => {
 
-    const currentUserCookie = useCookie('currentUser');
+    const currentUserCookie = useCookie<User | undefined>('currentUser');
     const router = useIonRouter();
 
     const getCurrentUser = (): User | undefined => {
-        const rawJson = currentUserCookie.value;
-        if (rawJson)
-            return JSON.parse(rawJson);
-        return undefined;
+        return currentUserCookie.value;
+    }
+
+    const hasCurrentUser = (): boolean => {
+        return !!getCurrentUser();
     }
 
     const isAuthenticated = async (): Promise<boolean> => {
         const response = await useAPI<User>("/user");
         if (response) {
-            currentUserCookie.value = JSON.stringify(response._data);;
+            currentUserCookie.value = response._data;
         } else {
             currentUserCookie.value = undefined;
         }
@@ -42,8 +43,8 @@ export const useAuth = () => {
             body: formData,
             server: false
         });
-        if (response && response._data) {
-            currentUserCookie.value = JSON.stringify(response._data);
+        if (response?._data) {
+            currentUserCookie.value = response._data;
             return true;
         }
         return false;
@@ -60,8 +61,8 @@ export const useAuth = () => {
             body: formData,
             server: false
         });
-        if (response && response._data) {
-            currentUserCookie.value = JSON.stringify(response._data);
+        if (response?._data) {
+            currentUserCookie.value = response._data;
             return true;
         }
         return false;
@@ -82,6 +83,7 @@ export const useAuth = () => {
 
     return {
         getCurrentUser,
+        hasCurrentUser,
         isAuthenticated,
         validate,
         register,

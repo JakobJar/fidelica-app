@@ -34,6 +34,8 @@
 </template>
 
 <script setup lang="ts">
+import {RawAnnotation} from "~/types/annotation";
+
 const runtimeConfig = useRuntimeConfig();
 const ionRouter = useIonRouter();
 const route = useRoute();
@@ -52,26 +54,16 @@ const submit = async () => {
   formData.set("comment", content.value);
   // TODO: Add related articles
 
-  const { data: result, error } = await useFetch(`/annotation/`, {
+  const response = await useAPI<RawAnnotation>(`/annotation/`, {
     method: "POST",
-    headers: {
-      "Accept": "application/json",
-    },
     body: formData,
-    credentials: "include",
     server: false,
-    baseURL: runtimeConfig.public.apiBaseUrl
   });
 
-  if (error.value) {
-    console.error(error.value);
+  if (!response.ok)
     return;
-  }
 
-  if (result.value) {
-    console.log(result.value);
-    ionRouter.push(`/annotation/${result.value.id}`);
-  }
+  ionRouter.push(`/annotation/url/${encodeURIComponent(url.value)}`);
 };
 </script>
 

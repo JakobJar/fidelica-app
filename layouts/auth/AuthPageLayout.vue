@@ -10,7 +10,7 @@
         <slot/>
         <div v-if="!props.hidePrivacyNote" id="privacy-note">
           <p class="tertiary-text">We value your privacy.</p>
-          <p class="tertiary-text">By signing up, you agree to our <span router-link="/terms">terms</span> and <span router-link="/conditions">conditions</span>.</p>
+          <p class="tertiary-text">By signing up, you agree to our <span @click="router.push('/terms')">terms</span> and <span @click="router.push('/conditions')">conditions</span>.</p>
         </div>
       </div>
     </ion-content>
@@ -18,6 +18,8 @@
 </template>
 
 <script setup lang="ts">
+const router = useIonRouter();
+
 const props = defineProps<{
     title?: string,
     hideLogo?: boolean,

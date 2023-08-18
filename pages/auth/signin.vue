@@ -7,9 +7,9 @@
       <ion-item class="input" lines="none">
         <ion-input v-model="password" placeholder="Password" type="password" />
       </ion-item>
-      <span router-link="/auth/password-reset">Forgot your password?</span>
+      <span @click="router.push('/auth/password-reset')">Forgot your password?</span>
       <ion-button @click="submit">Sign In</ion-button>
-      <span class="tertiary-text">Don't have an account yet? <span router-link="/auth/signup">Create one</span></span>
+      <span class="tertiary-text">Don't have an account yet? <span @click="router.push('/auth/signup')">Create one</span></span>
     </form>
   </AuthPageLayout>
 </template>
@@ -17,35 +17,18 @@
 <script setup lang="ts">
 import AuthPageLayout from "~/layouts/auth/AuthPageLayout.vue";
 
-const runtimeConfig = useRuntimeConfig();
-const ionRouter = useIonRouter();
+const router = useIonRouter();
+const auth = useAuth();
 
 const username = useState("username", () => "");
 const password = useState("password", () => "");
 
 const submit = async () => {
-  const data = new FormData();
-  data.set("username", username.value);
-  data.set("password", password.value);
-  data.set("g-recaptcha", "");
-
-  const {data: result, error} = await useFetch("/auth/login", {
-    method: "POST",
-    body: data,
-    server: false,
-    credentials: "include",
-    headers: {
-      "Accept": "application/json",
-    },
-    baseURL: runtimeConfig.public.apiBaseUrl
-  });
-
-  if (error) {
-    console.log(error);
+  if (username.value === "" || password.value === "")
     return;
+  if (await auth.login(username.value, password.value)) {
+    router.push("/");
   }
-
-  ionRouter.push("/");
 };
 </script>
 

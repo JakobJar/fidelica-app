@@ -43,6 +43,28 @@ useSeoMeta({title: "Check | " + runtimeConfig.public.siteName});
 const url = Array.isArray(route.params.url) ? route.params.url[0] : route.params.url;
 const modal = ref();
 
+const mapReporter = async (value: RawAnnotation): Promise<Annotation> => {
+  const reporterResponse = await useAPI<PreviewUser>(`/user/${value.reporterId}`, {
+    params: {
+      preview: true,
+    }
+  });
+
+  let reporter: PreviewUser | undefined = undefined;
+  if (reporterResponse.ok && reporterResponse._data)
+    reporter = reporterResponse._data;
+
+  return {
+    id: value.id,
+    postId: value.postId,
+    rating: value.rating as AnnotationRating,
+    note: value.note,
+    reporter: reporter,
+    upvoters: value.upvoters,
+    downvoters: value.downvoters,
+  }
+}
+
 const {data: annotations, pending } = useAsyncData(async () => {
   const response = await useAPI<RawAnnotation[]>("/annotation/url/" + encodeURIComponent(url));
   console.log(response);
@@ -57,31 +79,12 @@ const {data: annotations, pending } = useAsyncData(async () => {
   return annotations;
 });
 
-const mapReporter = async (value: RawAnnotation): Promise<Annotation> => {
-  const reporterResponse = await useAPI<PreviewUser>(`/user/${value.reporterId}`, {
-    params: {
-      preview: true,
-    }
-  });
-
-  let reporter: PreviewUser | undefined = undefined;
-  if (reporterResponse.ok && reporterResponse._data)
-    reporter = await reporterResponse._data;
-
-  return {
-    id: value.id,
-    postId: value.postId,
-    rating: value.rating as AnnotationRating,
-    note: value.note,
-    reporter: reporter,
-    upvoters: value.upvoters,
-    downvoters: value.downvoters,
-  }
-}
-
 const getVotes = (annotation: Annotation | RawAnnotation) => annotation.upvoters.length - annotation.downvoters.length;
 
-const reportAnnotation = () => router.push("/annotation?url=" + encodeURIComponent(url));
+const reportAnnotation = () => {
+  closeModal();
+  router.push("/annotation?url=" + encodeURIComponent(url));
+}
 
 const closeModal = () => modal.value?.$el.dismiss();
 </script>
